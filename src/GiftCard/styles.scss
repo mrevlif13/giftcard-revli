@@ -1,0 +1,54 @@
+.container {
+  background-color: #f1f4f8;
+
+  .max-w-screen-sm {
+    width: 576px !important;
+    background-color: white;
+  }
+
+  .min-h-full {
+    min-height: calc(100vh - 0px);
+  }
+  .my-0 {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+  }
+  .mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .header {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 1px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    background-color: #3a99d9;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+
+    img {
+      width: 150px;
+    }
+  }
+
+  .contentContainer {
+    padding-top: 100px;
+    padding: 20px;
+    width: 576 !important;
+    overflow-wrap: break-word;
+    max-height: 100% !important;
+  }
+}
+
+.ant-btn.ant-btn-primary {
+  background-color: #3a99d9;
+  border-radius: 5px;
+  width: 20% !important;
+  height: 40px;
+  bottom: 20px;
+}
