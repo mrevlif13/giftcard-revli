@@ -52,3 +52,9 @@
   height: 40px;
   bottom: 20px;
 }
+
+@media screen and (max-width: 576px) {
+  .header {
+    width: 576px !important;
+  }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.scss";
 import Logo from "./assets/logo-otto.png";
 import FormCard from "./components/form";
-import { Button } from "antd";
+import { Button, Col } from "antd";
 import html2canvas from "html2canvas";
 
 const Giftcard = () => {
@@ -21,6 +21,7 @@ const Giftcard = () => {
   };
   return (
     <div className="container">
+      <Col>
       <header className="header">
         <img src={Logo} alt="" />
         <p>Gift Card</p>
@@ -40,9 +41,10 @@ const Giftcard = () => {
             Downloads
           </Button>
         </center>
-      </div>
+      </div></Col>
     </div>
   );
 };
 
 export default Giftcard;
+
