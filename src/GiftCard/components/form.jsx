@@ -1,63 +1,62 @@
 import React, { useState } from "react";
 import { CloudUploadOutlined } from "@ant-design/icons";
-import { Modal, Upload, Form, Input } from "antd";
+import { Modal, Form, Input, Button } from "antd";
+import html2canvas from "html2canvas";
 import "./styles.scss";
 
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = () => resolve(reader.result);
-
-    reader.onerror = (error) => reject(error);
-  });
-
 const FormCard = () => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([]);
-
-  const handleCancel = () => setPreviewOpen(false);
-
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
+  const [file, setFile] = useState();
+  const handleChangeU = (e) => {
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
   };
 
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const [msg, setMsg] = useState({
+    dear: "",
+    msg: "",
+    to: "",
+  });
 
-  const uploadButton = (
-    <div>
-      <CloudUploadOutlined className="iconUpload" />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        <h3>Browse Files</h3>
-        <p>Drag and drop files here</p>
-      </div>
-    </div>
-  );
+  const handleInput = (event) => {
+    const value = event.target.value;
+    setMsg({
+      ...msg,
+      [event.target.name]: value,
+    });
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { TextArea } = Input;
+
   const onFinish = (values) => {
     console.log("Success:", values);
+    setIsModalOpen(true);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
- 
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDownloadImage = async () => {
+    const element = document.getElementById("print"),
+      canvas = await html2canvas(element),
+      data = canvas.toDataURL("image/jpg"),
+      link = document.createElement("a");
+
+    link.href = data;
+    link.download = "MyGiftCard.jpg";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <center>
@@ -70,31 +69,30 @@ const FormCard = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item
-          >
-            <Upload
-              listType="picture-card"
-              onPreview={handlePreview}
-              onChange={handleChange}
-            >
-              {fileList.length >= 1 ? null : uploadButton}
-            </Upload>
-            <Modal
-              open={previewOpen}
-              title={previewTitle}
-              footer={null}
-              onCancel={handleCancel}
-            >
-              <img
-                alt="example"
+          <label for="uploadImageBackground" className="inputUploadImage">
+            <div className="buttonInputFile">
+              <img className="imgView" src={file} alt="" />
+              <CloudUploadOutlined className="iconUpload" />
+              <div
                 style={{
-                  width: "100%",
-                  height: "auto",
+                  marginTop: 10,
                 }}
-                src={previewImage}
-              />
-            </Modal>
-          </Form.Item>
+              >
+                <h3>Browse Files</h3>
+                <p>Drag and drop files here</p>
+              </div>
+            </div>
+            <Input
+              className="inputUpload"
+              type="file"
+              id="uploadImageBackground"
+              name="upload"
+              onChange={handleChangeU}
+              size="large"
+              placeholder="..."
+              accept="image/png , image/jpeg, image/webp, image/jpg"
+            />
+          </label>
 
           <Form.Item
             name="dear"
@@ -106,7 +104,16 @@ const FormCard = () => {
               },
             ]}
           >
-            <Input size="large" placeholder="..." />
+            <Input
+              type="text"
+              id="dear"
+              name="dear"
+              onChange={handleInput}
+              value={msg.dear}
+              size="large"
+              placeholder="..."
+              maxLength={16}
+            />
           </Form.Item>
 
           <Form.Item
@@ -119,8 +126,18 @@ const FormCard = () => {
               },
             ]}
           >
-            <TextArea rows={4} placeholder="..." />
+            <TextArea
+              type="text"
+              id="msg"
+              name="msg"
+              onChange={handleInput}
+              value={msg.msg}
+              rows={4}
+              placeholder="..."
+              maxLength={60}
+            />
           </Form.Item>
+
           <Form.Item
             name="from"
             label="From :"
@@ -131,7 +148,52 @@ const FormCard = () => {
               },
             ]}
           >
-            <Input size="large" placeholder="..." />
+            <Input
+              type="text"
+              id="me"
+              name="me"
+              onChange={handleInput}
+              value={msg.me}
+              size="large"
+              placeholder="..."
+              maxLength={16}
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <center>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="buttonPreview"
+              >
+                Preview
+              </Button>
+              <Modal
+                title="Your Gift Card"
+                open={isModalOpen}
+                onCancel={handleCancel}
+                cancelButtonProps={{ style: { display: "none" } }}
+                okButtonProps={{ style: { display: "none" } }}
+              >
+                <div id="print">
+                  <p className="txtDear">{msg.dear}</p>
+                  <p className="txtMsg">{msg.msg}</p>
+                  <p className="txtFrom">{msg.me}</p>
+                  <img className="imgViewModal" src={file} alt="" />
+                </div>
+                <center>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    onClick={handleDownloadImage}
+                    className="buttonDownload"
+                  >
+                    Download
+                  </Button>
+                </center>
+              </Modal>
+            </center>
           </Form.Item>
         </Form>
       </center>
@@ -140,4 +202,3 @@ const FormCard = () => {
 };
 
 export default FormCard;
-
