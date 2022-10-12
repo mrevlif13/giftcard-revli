@@ -1,42 +1,139 @@
 div.ant-upload.ant-upload-select.ant-upload-select-picture-card {
-    width: 100% !important;
-    height: 150px;
-    border-radius: 8px;
+  width: 100% !important;
+  height: 150px;
+  border-radius: 8px;
 
-    .ant-upload{padding: 10px;}
+  .ant-upload {
+    padding: 10px;
+  }
 
-    .iconUpload{
-        font-size: 40px;
-        color: #5A657B;
-    }
+  .iconUpload {
+    font-size: 40px;
+    color: #5a657b;
+  }
 
-    h3{
-        color: #2D3444;
-        font-weight: 900px;
-        font-size: 18px;
-    }
+  h3 {
+    color: #2d3444;
+    font-weight: 900px;
+    font-size: 18px;
+  }
 
-    p{
-        color: #5A657B;
-        font-size: 12px;
-    }
-    
+  p {
+    color: #5a657b;
+    font-size: 12px;
+  }
 }
 
 div.ant-upload-list-picture-card-container {
-    display: inline-block;
-    width: 100%;
-    height: auto;
-    margin: 0 8px 8px 0;
-    vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  margin: 0 8px 8px 0;
+  vertical-align: top;
 }
+
+.ant-tooltip-inner {
+  display: none !important;
+}
+
 .ant-input.ant-input-lg {
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .ant-btn.ant-btn-primary {
-    background-color: #3A99D9;
-    border-radius: 5px;
-    width: 50%;
-    height: 40px;
+  background-color: #3a99d9;
+  border-radius: 5px;
+  width: 50%;
+  height: 40px;
+  bottom: 0 !important;
+}
+
+.ant-modal-content {
+  border-radius: 10px !important;
+
+  img {
+    width: 100%;
+  }
+
+  .txtDear {
+    position: absolute;
+    top: 34%;
+    left: 46%;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    color: #5b3c28;
+  }
+  .txtMsg {
+    position: absolute;
+    top: 40%;
+    left: 32%;
+    right: 20%;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 40px;
+    color: #b45736;
+  }
+  .txtFrom {
+    position: absolute;
+    top: 52%;
+    left: 42%;
+    right: 25%;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 40px;
+    color: #5b3c28;
+  }
+}
+
+.ant-modal-header {
+  border-radius: 10px !important;
+}
+
+.ant-modal-footer {
+  display: none !important;
+}
+
+.buttonPreview {
+  bottom: 0 !important;
+  margin-top: 20px !important;
+}
+
+.buttonDownload {
+  bottom: 0 !important;
+  margin-top: 30px !important;
+}
+
+.images {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.inputUploadImage {
+  cursor: pointer;
+
+  .buttonInputFile {
+    border: 1px solid #3a99d9 !important;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+
+    .imgView {
+      width: 500px;
+    }
+
+    .iconUpload {
+      font-size: 40px;
+      color: #5a657b;
+      margin-top: 30px !important;
+    }
+  }
+
+  .inputUpload {
+    display: none !important;
+  }
 }
